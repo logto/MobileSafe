@@ -1,5 +1,9 @@
 package com.logto.mobilesafe.activity;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+
 import com.logto.mobilesafe.R;
 
 import android.os.Bundle;
@@ -18,7 +22,6 @@ import android.widget.TextView;
  * 4.判断合法性
  * 5.检验是否有sdcard
  * @author Lenovo
- *
  */
 public class SplashActivity extends Activity {
 	private TextView tv_splash_version;
@@ -30,12 +33,42 @@ public class SplashActivity extends Activity {
         initView();
         //设置版本名称：
         tv_splash_version.setText("version:  "+getVersionName());
+        //软件升级
+        checkVersion();
     }
-
-
     
-
     /**
+     * 版本升级
+     * 检验是否有新版本，若有则升级
+     */
+    private void checkVersion() {
+	   /** 升级的流程
+    	*1.有新版本，则下载 ；
+    	*1.1 弹出对话框，让用户选择是否升级
+    	* 1.2:不选择升级，则直接进入主页面
+    	* 1.3：选择升级，则下载更新，替换安装，启动
+    	*2.没有则直接进入主页面
+    	*/
+    	//在工作线程中发起网络请求
+    	new Thread(){
+    		public void run() {
+    			//发起网络请求，拿到网络上最新的版本信息
+    			try {
+					URL uri = new URL("http://192.168.1.112:8080/updateversion.html");
+					
+				} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+    			
+    		};
+    	}.start();
+    	
+		
+	}
+
+
+	/**
      * 获取版本名称
      * @return
      */
