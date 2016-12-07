@@ -1,5 +1,6 @@
 package com.logto.mobilesafe.activity;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
@@ -54,10 +55,13 @@ public class SplashActivity extends Activity {
     		public void run() {
     			//发起网络请求，拿到网络上最新的版本信息
     			try {
-					URL uri = new URL("http://192.168.1.112:8080/updateversion.html");
-					
+					URL url = new URL(getString(R.string.serverurl));
+					url.openConnection();
 				} catch (MalformedURLException e) {
-					// TODO Auto-generated catch block
+					// URL异常
+					e.printStackTrace();
+				} catch (IOException e) {
+					//网络异常
 					e.printStackTrace();
 				}
     			
