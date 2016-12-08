@@ -1,18 +1,25 @@
 package com.logto.mobilesafe.activity;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.logto.mobilesafe.R;
+import com.logto.mobilesafe.utils.StreamTool;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.view.Menu;
+import android.util.Log;
 import android.widget.TextView;
 
 /**
@@ -25,20 +32,70 @@ import android.widget.TextView;
  * @author Lenovo
  */
 public class SplashActivity extends Activity {
+	protected static final int ENTER_HOME = 0;//进入主页面
+	protected static final int SHOW_UPDAPTE_DIALOG = 1;//显示对话框
+	protected static final int URL_ERROR = 2;//URL异常
+	protected static final int NETWORK_ERROR = 3;//网络异常
+	protected static final int JSON_EROR = 4 ;//JSON解析异常
 	private TextView tv_splash_version;
+	private String description;//升级描述信息
+	private String apkurl;//升级的apk的地址
+	private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         initView();
+        //处理消息
+        handleMessage();
         //设置版本名称：
         tv_splash_version.setText("version:  "+getVersionName());
         //软件升级
         checkVersion();
-    }
+    }  
+    /**
+     * 处理消息
+     */
+    private void handleMessage() { 
+		handler = new Handler(){
+			public void handleMessage(Message msg) {
+				switch (msg.what) {
+				case ENTER_HOME:
+					enterHome();
+					break;
+				case SHOW_UPDAPTE_DIALOG:
+					Log.e("SHOW_UPDAPTE_DIALOG","SHOW_UPDAPTE_DIALOG");
+					break;
+				case URL_ERROR:
+					Log.e("URL_ERROR","URL_ERROR");
+					break;
+				case NETWORK_ERROR:
+					Log.e("NETWORK_ERROR","NETWORK_ERROR");
+					break;
+				case JSON_EROR:
+					Log.e("JSON_EROR","JSON_EROR");
+					break;
+
+				default:
+					break;
+				}
+			}
+
+		};
+	}
+    
     
     /**
+     * 进入到主页面
+     */
+    private void enterHome() {
+    	Intent intent = new Intent(this, HomeActivity.class);
+    	startActivity(intent);
+    	//关闭掉启动页面
+    	finish();
+	};
+	/**
      * 版本升级
      * 检验是否有新版本，若有则升级
      */
@@ -51,18 +108,64 @@ public class SplashActivity extends Activity {
     	*2.没有则直接进入主页面
     	*/
     	//在工作线程中发起网络请求
+    	Log.e("checkVersion", "checkVersion");
     	new Thread(){
-    		public void run() {
+			public void run() {
     			//发起网络请求，拿到网络上最新的版本信息
+				Message msg = Message.obtain();
     			try {
+    				
 					URL url = new URL(getString(R.string.serverurl));
-					url.openConnection();
+					HttpURLConnection con = (HttpURLConnection) url.openConnection();
+					
+					
+					con.setRequestMethod("GET");//设置请求方法
+					con.setConnectTimeout(4000);//设置超时的时间
+					
+					int code = con.getResponseCode();
+					if(200 == code){
+						Log.e("200", "200");
+						//请求成功
+						//把流转换成String类型---即拿到json字符串
+						String result = StreamTool.streamToString(con.getInputStream());
+						Log.e("TAG", "result: "+result);
+						
+						//解析Json拿到版本信息
+						JSONObject obj = new JSONObject(result);
+						String version = (String) obj.get("version");
+						description = (String) obj.get("description");
+						apkurl = (String) obj.get("apkurl");
+						
+						//判断是否需要升级
+						if(getVersionName().equals(version)){
+							//是最新版本，不需要升级--->进入到主页面
+							msg.what=ENTER_HOME;
+							
+						}else {
+							//弹出对话框，提示用户是否需要升级 
+							msg.what = SHOW_UPDAPTE_DIALOG;
+							handler.sendMessage(msg);
+						}
+						
+					}
+					
 				} catch (MalformedURLException e) {
 					// URL异常
 					e.printStackTrace();
+					msg.what = URL_ERROR;
+					handler.sendMessage(msg);
 				} catch (IOException e) {
 					//网络异常
 					e.printStackTrace();
+					msg.what = NETWORK_ERROR;
+					handler.sendMessage(msg);
+				} catch (JSONException e) {
+					//解析异常
+					e.printStackTrace();
+					msg.what = JSON_EROR;
+					handler.sendMessage(msg);
+				} finally{
+					Log.e("finally", "finally");
 				}
     			
     		};
@@ -96,13 +199,6 @@ public class SplashActivity extends Activity {
 	private void initView() {
     	tv_splash_version = (TextView) findViewById(R.id.tv_splash_version);
 	}
-
-
-	@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.splash, menu);
-        return true;
-    }
+	
     
 }
