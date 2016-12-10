@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import com.logto.mobilesafe.R;
 import com.logto.mobilesafe.utils.StreamTool;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -29,6 +30,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +53,7 @@ public class SplashActivity extends Activity {
 	private String description;//升级描述信息
 	private String apkurl;//升级的apk的地址
 	private Handler handler;
+	private TextView tv_splash_updateinfo; 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +105,15 @@ public class SplashActivity extends Activity {
     protected void showUpdateDialog() {
     	AlertDialog dialog = new Builder(this).setTitle("提示").
     			setMessage(description).
-    			setNegativeButton("下次再说", null).
+    			setNegativeButton("下次再说", new OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						//消掉对话框，并进入到主页面
+						dialog.dismiss();
+						enterHome();
+					}
+				}).
     			setPositiveButton("立刻升级", new OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -115,28 +126,54 @@ public class SplashActivity extends Activity {
 
 								@Override
 								public void onFailure(Throwable t, String strMsg) {
-									// TODO Auto-generated method stub
+			 						// TODO Auto-generated method stub
 									super.onFailure(t, strMsg);
+									//打印错误日志
+									t.printStackTrace();
+									Toast.makeText(SplashActivity.this, "下载失败",0).show();
 								}
+								
+								public void onLoading(long count, long current) {
+									super.onLoading(count, current);
+									tv_splash_updateinfo.setVisibility(View.VISIBLE);
+									int progress = (int) (current*100/current);
+									tv_splash_updateinfo.setText("下载进度："+progress + "%");
+								};
 
 								@Override
 								public void onSuccess(File t) {
-									// TODO Auto-generated method stub
 									super.onSuccess(t);
+									Toast.makeText(SplashActivity.this, "下载成功", 0).show();
+									
+									//下载成功后，就直接自动安装最新的apk
+									installApk(t);
+								}
+								/**
+								 * 安装apk
+								 * @param t
+								 */
+								private void installApk(File t) {
+									/**
+									 <intent-filter>
+						                <action android:name="android.intent.action.VIEW" />
+						                <action android:name="android.intent.action.INSTALL_PACKAGE" />
+						                <category android:name="android.intent.category.DEFAULT" />
+						                <data android:scheme="content" />
+						                <data android:scheme="file" />
+						                <data android:mimeType="application/vnd.android.package-archive" />
+						            </itent-filter>
+						            */
+									//调用系统的安装程序进行apk的安装  --->  PackageInstaller
+									//拿到该app的功能清单文件，并找到启动该安装程序的intent-filter
+									Intent intent =  new Intent();
+									intent.setAction("android.intent.action.VIEW");//
+									intent.setDataAndType(Uri.fromFile(t),"application/vnd.android.package-archive");
+									startActivity(intent);
+									
 								}
 
-								@Override
-								public AjaxCallBack<File> progress(
-										boolean progress, int rate) {
-									// TODO Auto-generated method stub
-									return super.progress(progress, rate);
-								}
 								
 							});
-							
-							
-							
-							
 							//替换安装
 						}else {
 							Toast.makeText(SplashActivity.this, "外部存储卡不可用", 0).show();
@@ -206,7 +243,7 @@ public class SplashActivity extends Activity {
 						}else {
 							//弹出对话框，提示用户是否需要升级 
 //							msg.what = SHOW_UPDAPTE_DIALOG;
-							msg.what=ENTER_HOME;
+							msg.what=SHOW_UPDAPTE_DIALOG;
 							handler.sendMessage(msg);
 						}
 						
@@ -261,6 +298,7 @@ public class SplashActivity extends Activity {
 
 	private void initView() {
     	tv_splash_version = (TextView) findViewById(R.id.tv_splash_version);
+    	tv_splash_updateinfo = (TextView) findViewById(R.id.tv_splash_updateinfo);
 	}
 	
     
