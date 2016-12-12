@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -31,6 +32,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,24 +57,32 @@ public class SplashActivity extends Activity {
 	private Handler handler;
 	private TextView tv_splash_updateinfo; 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
-        initView();
-        Log.e("ip",getString(R.string.serverurl));
-        String ip = getString(R.string.serverurl);
-        //处理消息
-        handleMessage();
-        //设置版本名称：
-        tv_splash_version.setText("version:  "+getVersionName());
-        //软件升级
-        checkVersion();
-    }  
-    /**
-     * 处理消息
-     */
-    private void handleMessage() { 
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_splash);
+		initView();
+		Log.e("ip",getString(R.string.serverurl));
+		String ip = getString(R.string.serverurl);
+		//处理消息
+		handleMessage();
+		//设置版本名称：
+		tv_splash_version.setText("version:  "+getVersionName());
+		//软件升级
+		checkVersion();
+		//给splash添加动画渐变  
+		setAnimation();
+		
+	}  
+	private void setAnimation() {
+		AlphaAnimation aa = new AlphaAnimation(0.2f,1.0f);
+		aa.setDuration(1000);//设置动画时间
+		findViewById(R.id.rl_splash_root).startAnimation(aa);
+	}
+	/**
+	 * 处理消息
+	 */
+	private void handleMessage() { 
 		handler = new Handler(){
 			public void handleMessage(Message msg) {
 				switch (msg.what) {
@@ -100,13 +110,13 @@ public class SplashActivity extends Activity {
 
 		};
 	}
-    
-    
-    protected void showUpdateDialog() {
-    	AlertDialog dialog = new Builder(this).setTitle("提示").
-    			setMessage(description).
-    			setNegativeButton("下次再说", new OnClickListener() {
-					
+
+
+	protected void showUpdateDialog() {
+		AlertDialog dialog = new Builder(this).setTitle("提示").
+				setMessage(description).
+				setNegativeButton("下次再说", new OnClickListener() {
+
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						//消掉对话框，并进入到主页面
@@ -114,25 +124,25 @@ public class SplashActivity extends Activity {
 						enterHome();
 					}
 				}).
-    			setPositiveButton("立刻升级", new OnClickListener() {
+				setPositiveButton("立刻升级", new OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						//一般是下载到sd卡，所以要先判断外部存储SD卡状态是否可用
 						if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-							 
+
 							//下载apk--使用aFinal框架下载
 							FinalHttp http = new FinalHttp();
 							http.download(apkurl,Environment.getExternalStorageDirectory()+"/mobilesafe.apk",new AjaxCallBack<File>() {
 
 								@Override
 								public void onFailure(Throwable t, String strMsg) {
-			 						// TODO Auto-generated method stub
+									// TODO Auto-generated method stub
 									super.onFailure(t, strMsg);
 									//打印错误日志
 									t.printStackTrace();
 									Toast.makeText(SplashActivity.this, "下载失败",0).show();
 								}
-								
+
 								public void onLoading(long count, long current) {
 									super.onLoading(count, current);
 									tv_splash_updateinfo.setVisibility(View.VISIBLE);
@@ -144,7 +154,7 @@ public class SplashActivity extends Activity {
 								public void onSuccess(File t) {
 									super.onSuccess(t);
 									Toast.makeText(SplashActivity.this, "下载成功", 0).show();
-									
+
 									//下载成功后，就直接自动安装最新的apk
 									installApk(t);
 								}
@@ -162,17 +172,17 @@ public class SplashActivity extends Activity {
 						                <data android:scheme="file" />
 						                <data android:mimeType="application/vnd.android.package-archive" />
 						            </itent-filter>
-						            */
+									 */
 									//调用系统的安装程序进行apk的安装  --->  PackageInstaller
 									//拿到该app的功能清单文件，并找到启动该安装程序的intent-filter
 									Intent intent =  new Intent();
 									intent.setAction("android.intent.action.VIEW");//
 									intent.setDataAndType(Uri.fromFile(t),"application/vnd.android.package-archive");
 									startActivity(intent);
-									
+
 								}
 
-								
+
 							});
 							//替换安装
 						}else {
@@ -180,44 +190,46 @@ public class SplashActivity extends Activity {
 						}
 					}
 				}).create();
-    	
-    	dialog.show();
+
+		dialog.show();
 	}
 	/**
-     * 进入到主页面
-     */
-    private void enterHome() {
-    	Intent intent = new Intent(this, HomeActivity.class);
-    	startActivity(intent);
-    	//关闭掉启动页面
-    	finish();
+	 * 进入到主页面
+	 */
+	private void enterHome() {
+		Intent intent = new Intent(this, HomeActivity.class);
+		startActivity(intent);
+		//关闭掉启动页面
+		finish();
 	};
 	/**
-     * 版本升级
-     * 检验是否有新版本，若有则升级
-     */
-    private void checkVersion() {
-	   /** 升级的流程
-    	*1.有新版本，则下载 ；
-    	*1.1 弹出对话框，让用户选择是否升级
-    	* 1.2:不选择升级，则直接进入主页面
-    	* 1.3：选择升级，则下载更新，替换安装，启动
-    	*2.没有则直接进入主页面
-    	*/
-    	//在工作线程中发起网络请求
-    	Log.e("checkVersion", "checkVersion");
-    	new Thread(){
+	 * 版本升级
+	 * 检验是否有新版本，若有则升级
+	 */
+	private void checkVersion() {
+		/** 升级的流程
+		 *1.有新版本，则下载 ；
+		 *1.1 弹出对话框，让用户选择是否升级
+		 * 1.2:不选择升级，则直接进入主页面
+		 * 1.3：选择升级，则下载更新，替换安装，启动
+		 *2.没有则直接进入主页面
+		 */
+		//在工作线程中发起网络请求
+		Log.e("checkVersion", "checkVersion");
+		new Thread(){
 			public void run() {
-    			//发起网络请求，拿到网络上最新的版本信息
+				//发起网络请求，拿到网络上最新的版本信息
 				Message msg = Message.obtain();
-    			try {
-    				
-    				Log.e("TAG", "4000");
+				//强制程序在主页面停留2秒钟
+				long startTime = System.currentTimeMillis();
+				try {
+
+					Log.e("TAG", "4000");
 					URL url = new URL(getString(R.string.serverurl));
 					Log.e("ip",getString(R.string.serverurl));
 					HttpURLConnection con = (HttpURLConnection) url.openConnection();
-					
-					
+
+
 					con.setRequestMethod("GET");//设置请求方法
 					con.setConnectTimeout(4000);//设置超时的时间
 					int code = con.getResponseCode();
@@ -227,58 +239,58 @@ public class SplashActivity extends Activity {
 						//把流转换成String类型---即拿到json字符串
 						String result = StreamTool.streamToString(con.getInputStream());
 						Log.e("TAG", "result: "+result);
-						
+
 						//解析Json拿到版本信息
 						JSONObject obj = new JSONObject(result);
 						String version = (String) obj.get("version");
 						description = (String) obj.get("description");
 						apkurl = (String) obj.get("apkurl");
-						
+
 						//判断是否需要升级
 						if(getVersionName().equals(version)){
 							//是最新版本，不需要升级--->进入到主页面
 							msg.what=ENTER_HOME;
-							handler.sendMessage(msg);
-							
 						}else {
 							//弹出对话框，提示用户是否需要升级 
-//							msg.what = SHOW_UPDAPTE_DIALOG;
 							msg.what=SHOW_UPDAPTE_DIALOG;
-							handler.sendMessage(msg);
 						}
-						
+
 					}
-					
+
 				} catch (MalformedURLException e) {
 					// URL异常
 					e.printStackTrace();
 					msg.what = URL_ERROR;
-					handler.sendMessage(msg);
 				} catch (IOException e) {
 					//网络异常
 					e.printStackTrace();
 					msg.what = NETWORK_ERROR;
-					handler.sendMessage(msg);
 				} catch (JSONException e) {
 					//解析异常
 					e.printStackTrace();
 					msg.what = JSON_EROR;
-					handler.sendMessage(msg);
+
 				} finally{
-					Log.e("finally", "finally");
+					long endTime = System.currentTimeMillis();
+					long usedTime = startTime - endTime;//如果启动时间少于2秒钟，则强制休眠到2秒
+					if(usedTime<2000){
+						SystemClock.sleep(2000-usedTime);
+					}
+
+					handler.sendMessage(msg);
 				}
-    			
-    		};
-    	}.start();
-    	
-		
+
+			};
+		}.start();
+
+
 	}
 
 
 	/**
-     * 获取版本名称
-     * @return
-     */
+	 * 获取版本名称
+	 * @return
+	 */
 	private String getVersionName() {
 		//拿到包管理器，并拿到清单文件信息
 		PackageManager pm = getPackageManager();
@@ -297,9 +309,9 @@ public class SplashActivity extends Activity {
 
 
 	private void initView() {
-    	tv_splash_version = (TextView) findViewById(R.id.tv_splash_version);
-    	tv_splash_updateinfo = (TextView) findViewById(R.id.tv_splash_updateinfo);
+		tv_splash_version = (TextView) findViewById(R.id.tv_splash_version);
+		tv_splash_updateinfo = (TextView) findViewById(R.id.tv_splash_updateinfo);
 	}
-	
-    
+
+
 }
