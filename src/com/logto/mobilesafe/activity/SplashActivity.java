@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -111,10 +112,17 @@ public class SplashActivity extends Activity {
 		};
 	}
 
-
 	protected void showUpdateDialog() {
 		AlertDialog dialog = new Builder(this).setTitle("提示").
 				setMessage(description).
+				setOnCancelListener(new OnCancelListener() {
+					@Override
+					public void onCancel(DialogInterface dialog) {
+						//返回，并进入到主页面
+						dialog.dismiss();
+						enterHome();
+					}
+				}).
 				setNegativeButton("下次再说", new OnClickListener() {
 
 					@Override
@@ -179,10 +187,7 @@ public class SplashActivity extends Activity {
 									intent.setAction("android.intent.action.VIEW");//
 									intent.setDataAndType(Uri.fromFile(t),"application/vnd.android.package-archive");
 									startActivity(intent);
-
 								}
-
-
 							});
 							//替换安装
 						}else {
@@ -190,7 +195,8 @@ public class SplashActivity extends Activity {
 						}
 					}
 				}).create();
-
+		//是对话框不能取消（点击返回键无效果）
+		//dialog.setCancelable(false);
 		dialog.show();
 	}
 	/**
@@ -283,9 +289,7 @@ public class SplashActivity extends Activity {
 			};
 		}.start();
 
-
 	}
-
 
 	/**
 	 * 获取版本名称
@@ -303,11 +307,10 @@ public class SplashActivity extends Activity {
 			return null;
 		}
 	}
-
-
-
-
-
+	
+	/**
+	 * 初始化view
+	 */
 	private void initView() {
 		tv_splash_version = (TextView) findViewById(R.id.tv_splash_version);
 		tv_splash_updateinfo = (TextView) findViewById(R.id.tv_splash_updateinfo);
