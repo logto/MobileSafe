@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.logto.mobilesafe.R;
 import com.logto.mobilesafe.view.SettingItemView;
@@ -35,9 +37,9 @@ public class SettingActivity extends Activity {
 		siv_update.setChecked(isAutoUpdate);
 		
 		if(isAutoUpdate){
-			siv_update.setDescription(getResources().getString(R.string.auto_update_off));
-		}else {
 			siv_update.setDescription(getResources().getString(R.string.auto_update_on));
+		}else {
+			siv_update.setDescription(getResources().getString(R.string.auto_update_off));
 		}
 			
 	}

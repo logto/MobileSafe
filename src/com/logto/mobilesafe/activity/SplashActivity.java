@@ -28,6 +28,8 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -57,24 +59,40 @@ public class SplashActivity extends Activity {
 	private String apkurl;//升级的apk的地址
 	private Handler handler;
 	private TextView tv_splash_updateinfo; 
+	private SharedPreferences sp;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
 		initView();
-		Log.e("ip",getString(R.string.serverurl));
-		String ip = getString(R.string.serverurl);
 		//处理消息
 		handleMessage();
 		//设置版本名称：
 		tv_splash_version.setText("version:  "+getVersionName());
 		//软件升级
+		isAutoUpdateVersion();
 		checkVersion();
 		//给splash添加动画渐变  
 		setAnimation();
 		
 	}  
+	/**
+	 * 是否自动升级
+	 */
+	private void isAutoUpdateVersion() {
+		if(sp.getBoolean("update", false)){
+			checkVersion();
+		}else {
+			//延迟两秒进入主页面
+			handler.postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					enterHome();
+				}
+			}, 2000);
+		}
+	}
 	private void setAnimation() {
 		AlphaAnimation aa = new AlphaAnimation(0.2f,1.0f);
 		aa.setDuration(1000);//设置动画时间
@@ -232,7 +250,6 @@ public class SplashActivity extends Activity {
 
 					Log.e("TAG", "4000");
 					URL url = new URL(getString(R.string.serverurl));
-					Log.e("ip",getString(R.string.serverurl));
 					HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
 
@@ -314,6 +331,7 @@ public class SplashActivity extends Activity {
 	private void initView() {
 		tv_splash_version = (TextView) findViewById(R.id.tv_splash_version);
 		tv_splash_updateinfo = (TextView) findViewById(R.id.tv_splash_updateinfo);
+		sp = getSharedPreferences("config", MODE_PRIVATE);
 	}
 
 
