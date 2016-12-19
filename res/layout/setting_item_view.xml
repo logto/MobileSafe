@@ -25,7 +25,9 @@
             />
         
         <CheckBox 
-		    android:id="@+id/cb_setting"
+            android:focusable="false"
+            android:clickable="false"
+		    android:id="@+id/cb_status"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"

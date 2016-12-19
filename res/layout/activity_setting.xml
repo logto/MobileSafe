@@ -16,6 +16,15 @@
         android:textSize="16sp" />
     
  	<com.logto.mobilesafe.view.SettingItemView
+ 	    android:id="@+id/siv_update"
+ 	    android:layout_width="wrap_content"
+ 	    android:layout_height="wrap_content"
+ 	    />
+ 	<com.logto.mobilesafe.view.SettingItemView
+ 	    android:layout_width="wrap_content"
+ 	    android:layout_height="wrap_content"
+ 	    />
+ 	<com.logto.mobilesafe.view.SettingItemView
  	    android:layout_width="wrap_content"
  	    android:layout_height="wrap_content"
  	    />

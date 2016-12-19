@@ -34,12 +34,14 @@ public class HomeActivity extends Activity {
 		setListeners();
 	}
 	private void setListeners() {
+		//GridView的点击事件
 		gv_home.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				switch (position) {
 				case 8:
+					//跳转到设置中心
 					Intent intent = new Intent(HomeActivity.this,SettingActivity.class); 
 					startActivity(intent);
 					break;

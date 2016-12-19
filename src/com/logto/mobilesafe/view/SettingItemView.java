@@ -5,9 +5,13 @@ import com.logto.mobilesafe.R;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class SettingItemView extends RelativeLayout{
+	private CheckBox cb_status;
+	private TextView tv_desc;
 	//需要设置样式时使用
 	public SettingItemView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -32,9 +36,33 @@ public class SettingItemView extends RelativeLayout{
 	private void initView(Context context) {
 		//infalte方法的作用：把布局文件-->view
 		//root:添加谁进来，谁就是R.layout.setting_item_view的父亲，也就是说，把此布局文件挂载在传来进来的这个控件上
-		View.inflate(context, R.layout.setting_item_view, SettingItemView.this);
-		
+		View settingView = View.inflate(context, R.layout.setting_item_view, this);
+		cb_status = (CheckBox) findViewById(R.id.cb_status);
+		tv_desc = (TextView) findViewById(R.id.tv_desc);
+	}
+	
+	/**
+	 * 得到组合控件是否被勾选
+	 * @return
+	 */
+	public boolean isChecked(){
+		return  cb_status.isChecked();
+ 	}
+	/**
+	 * 设置控件的勾选状态
+	 */
+	public void setChecked(boolean isChecked){
+		cb_status.setChecked(isChecked);
+	}
+	
+	/**
+	 * 设置组合控件的的状态信息
+	 * @param description
+	 */
+	public void setDescription(String description){
+		tv_desc.setText(description);
 	}
 	
 
+	
 }
