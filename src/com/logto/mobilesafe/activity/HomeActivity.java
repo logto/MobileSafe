@@ -96,4 +96,8 @@ public class HomeActivity extends Activity {
 		}
 		
 	}
+	
+	public void get(){
+		
+	}
 }
