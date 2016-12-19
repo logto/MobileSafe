@@ -28,6 +28,8 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -57,7 +59,7 @@ public class SplashActivity extends Activity {
 	private String apkurl;//升级的apk的地址
 	private Handler handler;
 	private TextView tv_splash_updateinfo; 
-
+	private SharedPreferences sp;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -70,11 +72,19 @@ public class SplashActivity extends Activity {
 		//设置版本名称：
 		tv_splash_version.setText("version:  "+getVersionName());
 		//软件升级
+		isAutoUpdateVersion();
 		checkVersion();
 		//给splash添加动画渐变  
 		setAnimation();
-		
+
 	}  
+	private void isAutoUpdateVersion() {
+		if(!sp.getBoolean("update", false)){
+
+			return;
+		}
+
+	}
 	private void setAnimation() {
 		AlphaAnimation aa = new AlphaAnimation(0.2f,1.0f);
 		aa.setDuration(1000);//设置动画时间
@@ -220,13 +230,14 @@ public class SplashActivity extends Activity {
 		 * 1.3：选择升级，则下载更新，替换安装，启动
 		 *2.没有则直接进入主页面
 		 */
+
 		//在工作线程中发起网络请求
 		Log.e("checkVersion", "checkVersion");
 		new Thread(){
 			public void run() {
 				//发起网络请求，拿到网络上最新的版本信息
 				Message msg = Message.obtain();
-				//强制程序在主页面停留2秒钟
+				//强制程序在启动页面停留2秒钟
 				long startTime = System.currentTimeMillis();
 				try {
 
@@ -258,6 +269,7 @@ public class SplashActivity extends Activity {
 							msg.what=ENTER_HOME;
 						}else {
 							//弹出对话框，提示用户是否需要升级 
+
 							msg.what=SHOW_UPDAPTE_DIALOG;
 						}
 
@@ -307,13 +319,14 @@ public class SplashActivity extends Activity {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * 初始化view
 	 */
 	private void initView() {
 		tv_splash_version = (TextView) findViewById(R.id.tv_splash_version);
 		tv_splash_updateinfo = (TextView) findViewById(R.id.tv_splash_updateinfo);
+		sp = getSharedPreferences("config", MODE_PRIVATE);
 	}
 
 
