@@ -4,12 +4,8 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.CheckBox;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.logto.mobilesafe.R;
 import com.logto.mobilesafe.view.SettingItemView;

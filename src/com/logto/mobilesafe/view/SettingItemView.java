@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SettingItemView extends RelativeLayout{
 	private CheckBox cb_status;
@@ -23,11 +24,9 @@ public class SettingItemView extends RelativeLayout{
 	public SettingItemView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initView(context);
-		System.out.print(attrs.getAttributeValue(0));
-		System.out.print(attrs.getAttributeValue(1));
-		System.out.print(attrs.getAttributeValue(2));
-		System.out.print(attrs.getAttributeValue(3));
-		System.out.print(attrs.getAttributeValue(4));
+		attrs.getAttributeValue("http://schemas.android.com/apk/res/com.logto.mobilesafe",
+								"title");
+		
 	}
 	
 	//代码中实例化时使用

@@ -20,11 +20,11 @@
  	    android:id="@+id/siv_update"
  	    android:layout_width="wrap_content"
  	    android:layout_height="wrap_content"
- 	    />
- 	<com.logto.mobilesafe.view.SettingItemView
  	    app:title="设置自动更新"
  	    app:update_off="自动更新已经关闭"
  	    app:update_on="自动更新已经开启"
+ 	    />
+ 	<com.logto.mobilesafe.view.SettingItemView
  	    android:layout_width="wrap_content"
  	    android:layout_height="wrap_content"
  	    />
