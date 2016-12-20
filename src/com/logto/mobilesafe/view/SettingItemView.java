@@ -4,6 +4,7 @@ import com.logto.mobilesafe.R;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
@@ -22,6 +23,11 @@ public class SettingItemView extends RelativeLayout{
 	public SettingItemView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initView(context);
+		System.out.print(attrs.getAttributeValue(0));
+		System.out.print(attrs.getAttributeValue(1));
+		System.out.print(attrs.getAttributeValue(2));
+		System.out.print(attrs.getAttributeValue(3));
+		System.out.print(attrs.getAttributeValue(4));
 	}
 	
 	//代码中实例化时使用

@@ -60,13 +60,12 @@ public class SplashActivity extends Activity {
 	private Handler handler;
 	private TextView tv_splash_updateinfo; 
 	private SharedPreferences sp;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
 		initView();
-		Log.e("ip",getString(R.string.serverurl));
-		String ip = getString(R.string.serverurl);
 		//处理消息
 		handleMessage();
 		//设置版本名称：
@@ -78,12 +77,21 @@ public class SplashActivity extends Activity {
 		setAnimation();
 
 	}  
+	/**
+	 * 是否自动升级
+	 */
 	private void isAutoUpdateVersion() {
-		if(!sp.getBoolean("update", false)){
-
-			return;
+		if(sp.getBoolean("update", false)){
+			checkVersion();
+		}else {
+			//延迟两秒进入主页面
+			handler.postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					enterHome();
+				}
+			}, 2000);
 		}
-
 	}
 	private void setAnimation() {
 		AlphaAnimation aa = new AlphaAnimation(0.2f,1.0f);
@@ -243,7 +251,6 @@ public class SplashActivity extends Activity {
 
 					Log.e("TAG", "4000");
 					URL url = new URL(getString(R.string.serverurl));
-					Log.e("ip",getString(R.string.serverurl));
 					HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
 
