@@ -1,19 +1,22 @@
 package com.logto.mobilesafe.view;
 
-import com.logto.mobilesafe.R;
-
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.logto.mobilesafe.R;
 
 public class SettingItemView extends RelativeLayout{
 	private CheckBox cb_status;
 	private TextView tv_desc;
+	private TextView tv_title;
+	
+	private String title;
+	private String update_off;
+	private String update_on;
 	//需要设置样式时使用
 	public SettingItemView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -24,8 +27,12 @@ public class SettingItemView extends RelativeLayout{
 	public SettingItemView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initView(context);
-		attrs.getAttributeValue("http://schemas.android.com/apk/res/com.logto.mobilesafe",
-								"title");
+		title = attrs.getAttributeValue("http://schemas.android.com/apk/res/com.logto.mobilesafe","title");
+		update_off = attrs.getAttributeValue("http://schemas.android.com/apk/res/com.logto.mobilesafe", "update_off");
+		update_on = attrs.getAttributeValue("http://schemas.android.com/apk/res/com.logto.mobilesafe", "update_on");
+		
+		tv_title.setText(title);
+		tv_desc.setText(update_off);
 		
 	}
 	
@@ -42,8 +49,12 @@ public class SettingItemView extends RelativeLayout{
 		//infalte方法的作用：把布局文件-->view
 		//root:添加谁进来，谁就是R.layout.setting_item_view的父亲，也就是说，把此布局文件挂载在传来进来的这个控件上
 		View settingView = View.inflate(context, R.layout.setting_item_view, this);
+		
 		cb_status = (CheckBox) findViewById(R.id.cb_status);
 		tv_desc = (TextView) findViewById(R.id.tv_desc);
+		tv_title = (TextView) findViewById(R.id.tv_title);
+		
+		
 	}
 	
 	/**
@@ -58,6 +69,11 @@ public class SettingItemView extends RelativeLayout{
 	 */
 	public void setChecked(boolean isChecked){
 		cb_status.setChecked(isChecked);
+		if(isChecked){
+			setDescription(update_on);
+		}else {
+			setDescription(update_off);
+		}
 	}
 	
 	/**

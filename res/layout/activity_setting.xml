@@ -25,11 +25,13 @@
  	    app:update_on="自动更新已经开启"
  	    />
  	<com.logto.mobilesafe.view.SettingItemView
+ 	    android:id="@+id/siv_music"
  	    android:layout_width="wrap_content"
  	    android:layout_height="wrap_content"
+ 	    app:title="音乐自动更新"
+ 	    app:update_off="音乐更新已关闭"
+ 	    app:update_on="音乐更新已开启"
  	    />
- 	<com.logto.mobilesafe.view.SettingItemView
- 	    android:layout_width="wrap_content"
- 	    android:layout_height="wrap_content"
- 	    />
+ 
+ 	
 </LinearLayout>
