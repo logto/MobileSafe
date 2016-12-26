@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.logto.mobilesafe.R;
+import com.logto.mobilesafe.utils.MD5Utils;
 /**
  * 主页面
  * @author logto
@@ -85,10 +86,10 @@ public class HomeActivity extends Activity {
 
 	}
 	/**
-	 * 输入密码的对话框
+	 * 登录--输入密码的对话框
 	 */
 	private void showInputDialog() {
-		View view_dialog = View.inflate(this, R.layout.dialog_setup_password, null);
+		View view_dialog = View.inflate(this, R.layout.dialog_input_password, null);
 		final EditText et_password = (EditText) view_dialog.findViewById(R.id.et_password);
 		final String sp_password = sp.getString("password","666");
 		Button bt_confirm = (Button) view_dialog.findViewById(R.id.bt_confirm);
@@ -117,20 +118,20 @@ public class HomeActivity extends Activity {
 					return;
 				}
 				//3.判断密码是否已相同
-				if(!password.equals(sp_password)){
+				if(!MD5Utils.ecoder(password).equals(sp_password)){
 					Toast.makeText(HomeActivity.this, "密码输入错误，请重新输入", 0).show();
 					return;
 				}
 				//4.取消对话框
 				dialog.dismiss();
 				//5.进入到手机卫士页面
-				
+				Intent intent = new Intent(HomeActivity.this,MobileSecurityActivity.class);
+				startActivity(intent);
 			}
 		});
-
 	}
 	/**
-	 * 设置密码的对话框 
+	 * 注册--设置密码的对话框 
 	 */
 	private AlertDialog dialog;
 	private void showSetPasswordDialog() {
@@ -170,11 +171,15 @@ public class HomeActivity extends Activity {
 				}
 				//4.相同则保存密码，并进入到手机卫士页面
 				Editor editor = sp.edit();
-				editor.putString("password", password);
+				editor.putString("password", MD5Utils.ecoder(password));
 				editor.commit();
 				//取消对话框
 				dialog.dismiss();
 				Log.e(TAG, password);
+				
+				//5.进入到手机卫士页面
+				Intent intent = new Intent(HomeActivity.this,MobileSecurityActivity.class);
+				startActivity(intent);
 			}
 		});
 	}

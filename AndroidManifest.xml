@@ -31,6 +31,14 @@
             android:name="com.logto.mobilesafe.activity.SettingActivity"
             android:label="@string/title_activity_setting" >
         </activity>
+        <activity
+            android:name="com.logto.mobilesafe.activity.MobileSecurityActivity"
+            android:label="@string/title_activity_mobile_security" >
+        </activity>
+        <activity
+            android:name="com.logto.mobilesafe.activity.MobileSecurityGuideOneActivity"
+            android:label="@string/title_activity_mobile_security_guide_one" >
+        </activity>
     </application>
 
 </manifest>
