@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res/com.logto.mobilesafe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffffff"
@@ -11,33 +12,22 @@
         android:layout_height="60dp"
         android:background="#8866ff00"
         android:gravity="center"
-        android:text="欢迎使用手机防盗"
+        android:text="手机卡绑定"
         android:textColor="#000000"
         android:textSize="18sp"/>
         <TextView 
-        android:text="您的手机防盗卫士"
+        android:text="通过绑定SIM卡:\n下次重启手机如果发现SIM卡变化 \n 就会发送报警短信"
         style="@style/TextStyleOfSetupGuide"
         />
-        <TextView 
-        android:text="SIM卡变更报警"
-        style="@style/TextStyleOfSetupGuide"
-        android:drawableLeft="@android:drawable/star_big_on"
-        />
-        <TextView 
-        android:text="GPS追踪"
-        android:drawableLeft="@android:drawable/star_big_on"
-        style="@style/TextStyleOfSetupGuide"
-        />
-        <TextView 
-        android:text="远程数据销毁"
-        android:drawableLeft="@android:drawable/star_big_on"
-        style="@style/TextStyleOfSetupGuide"
-        />
-        <TextView 
-        android:text="远程锁屏"
-        android:drawableLeft="@android:drawable/star_big_on"
-        style="@style/TextStyleOfSetupGuide"
-        />
+      	<com.logto.mobilesafe.view.SettingItemView
+ 	    android:id="@+id/siv_update"
+ 	    android:layout_width="wrap_content"
+ 	    android:layout_height="wrap_content"
+ 	    app:title="点击绑定SIM卡"
+ 	    app:update_off="SIM卡未绑定"
+ 	    app:update_on="SIM卡已绑定"
+ 	    />
+
         
         <LinearLayout 
             android:layout_height="wrap_content"
@@ -77,9 +67,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@drawable/setup_one"
+                android:src="@drawable/setup_two"
                 />
 
+            <Button
+                android:id="@+id/bt_pre"
+               style="@style/button_pre_style"/>
             <Button
                 android:id="@+id/bt_next"
                style="@style/button_next_style"/>

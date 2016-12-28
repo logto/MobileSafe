@@ -11,34 +11,15 @@
         android:layout_height="60dp"
         android:background="#8866ff00"
         android:gravity="center"
-        android:text="欢迎使用手机防盗"
+        android:text="恭喜您，设置安全"
         android:textColor="#000000"
         android:textSize="18sp"/>
-        <TextView 
-        android:text="您的手机防盗卫士"
-        style="@style/TextStyleOfSetupGuide"
+    
+    <CheckBox 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="当前手机状态没有开启"
         />
-        <TextView 
-        android:text="SIM卡变更报警"
-        style="@style/TextStyleOfSetupGuide"
-        android:drawableLeft="@android:drawable/star_big_on"
-        />
-        <TextView 
-        android:text="GPS追踪"
-        android:drawableLeft="@android:drawable/star_big_on"
-        style="@style/TextStyleOfSetupGuide"
-        />
-        <TextView 
-        android:text="远程数据销毁"
-        android:drawableLeft="@android:drawable/star_big_on"
-        style="@style/TextStyleOfSetupGuide"
-        />
-        <TextView 
-        android:text="远程锁屏"
-        android:drawableLeft="@android:drawable/star_big_on"
-        style="@style/TextStyleOfSetupGuide"
-        />
-        
         <LinearLayout 
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
@@ -77,9 +58,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@drawable/setup_one"
+                android:src="@drawable/set_three"
                 />
 
+            <Button
+                android:id="@+id/bt_pre"
+               style="@style/button_pre_style"/>
             <Button
                 android:id="@+id/bt_next"
                style="@style/button_next_style"/>

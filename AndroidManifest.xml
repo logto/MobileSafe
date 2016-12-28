@@ -39,6 +39,18 @@
             android:name="com.logto.mobilesafe.activity.MobileSecurityGuideOneActivity"
             android:label="@string/title_activity_mobile_security_guide_one" >
         </activity>
+        <activity
+            android:name="com.logto.mobilesafe.activity.MobileSecurityGuideTwoActivity"
+            android:label="@string/title_activity_mobile_security_guide_two" >
+        </activity>
+        <activity
+            android:name="com.logto.mobilesafe.activity.MobileSecurityGuideThreeActivity"
+            android:label="@string/title_activity_mobile_security_guide_three" >
+        </activity>
+        <activity
+            android:name="com.logto.mobilesafe.activity.MobileSecurityGuideFourActivity"
+            android:label="@string/title_activity_mobile_security_guide_four" >
+        </activity>
     </application>
 
 </manifest>
