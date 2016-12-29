@@ -18,7 +18,8 @@
     <CheckBox 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="当前手机状态没有开启"
+        android:text="当前手机防盗没有开启"
+        android:textColor="#000000"
         />
         <LinearLayout 
             android:layout_height="wrap_content"
@@ -31,22 +32,22 @@
             <ImageView 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:src="@android:drawable/presence_offline"
+                />
+            <ImageView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/presence_offline"
+                />
+            <ImageView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/presence_offline"
+                />
+            <ImageView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@android:drawable/presence_online"
-                />
-            <ImageView 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/presence_offline"
-                />
-            <ImageView 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/presence_offline"
-                />
-            <ImageView 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/presence_offline"
                 />
         </LinearLayout>
         
@@ -65,7 +66,8 @@
                 android:id="@+id/bt_pre"
                style="@style/button_pre_style"/>
             <Button
-                android:id="@+id/bt_next"
+                android:id="@+id/bt_commplete"
+                android:text="完成"
                style="@style/button_next_style"/>
         </RelativeLayout>
 

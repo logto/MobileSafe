@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffffff"
+    android:orientation="vertical"
     tools:context=".MobileSecurityActivity" >
 
     <TextView
@@ -14,5 +15,94 @@
         android:textColor="#000000"
         android:textSize="16sp"/>
     
+	<RelativeLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="40dp"
+	    android:layout_marginLeft="5dp"
+	    android:layout_marginRight="5dp"
+	    >
+	    <TextView 
+			android:layout_width="wrap_content"	        
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:text="安全号码"
+			android:textColor="#000000"
+	        />
+	    <TextView
+	        android:id="@+id/tv_safeNumber"
+			android:layout_width="wrap_content"	        
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:hint="120"
+			android:textColor="#000000"
+	        />
+	</RelativeLayout>
+	
+	<RelativeLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="40dp"
+	    android:layout_marginLeft="5dp"
+	    android:layout_marginRight="5dp"
+	    >
+	    <TextView 
+			android:layout_width="wrap_content"	        
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:text="防盗保护是否开启"
+			android:textColor="#000000"
+	        />
+	    <ImageView
+	        android:id="@+id/tv_safeNumber"
+			android:layout_width="wrap_content"	        
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:src="@drawable/not_selected"
+	        />
+	</RelativeLayout>
+	
+	<Button 
+	    android:id="@+id/btn_reEnterSettingGuide"
+	    android:layout_width="match_parent"
+	    android:layout_height="40dp"
+	    android:layout_marginLeft="5dp"
+	    android:layout_marginRight="5dp"
+	    android:text="重新进入设置向导"
+	    android:textColor="#99cc99"
+	    android:textSize="14sp"
+	    android:gravity="left|center_vertical"
+	    android:background="@drawable/btn_shape_setting"
+	    />
+	
+	<TextView 
+	    android:layout_width="match_parent"
+	    android:layout_height="40dp"
+	    android:text="功能介绍"
+	    android:gravity="left|center_vertical"
+	    android:layout_marginTop="5dp"
+	    android:textColor="#cc3333"
+	    />
+	
+	<TextView
+        style="@style/TextStyleOfSetupGuide"
+        android:drawableLeft="@drawable/selected"
+        android:layout_marginTop="10dp"
+        android:text="GPS追踪：#*location*#" />
+	<TextView
+        style="@style/TextStyleOfSetupGuide"
+       android:drawableLeft="@drawable/selected"
+        android:layout_marginTop="15dp"
+        android:text="播放报警音乐：#*alarm*#" />
+	<TextView
+        style="@style/TextStyleOfSetupGuide"
+        android:drawableLeft="@drawable/selected"
+        android:layout_marginTop="15dp"
+        android:text="远程删除数据：#*wipedata*#" />
+	<TextView
+        style="@style/TextStyleOfSetupGuide"
+        android:drawableLeft="@drawable/selected"
+        android:layout_marginTop="15dp"
+        android:text="远程锁屏：#*lockscreen*#" />
 
 </LinearLayout>

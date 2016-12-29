@@ -13,76 +13,74 @@
         android:gravity="center"
         android:text="欢迎使用手机防盗"
         android:textColor="#000000"
-        android:textSize="18sp"/>
-        <TextView 
-        android:text="您的手机防盗卫士"
-        style="@style/TextStyleOfSetupGuide"
-        />
-        <TextView 
-        android:text="SIM卡变更报警"
-        style="@style/TextStyleOfSetupGuide"
-        android:drawableLeft="@android:drawable/star_big_on"
-        />
-        <TextView 
-        android:text="GPS追踪"
-        android:drawableLeft="@android:drawable/star_big_on"
-        style="@style/TextStyleOfSetupGuide"
-        />
-        <TextView 
-        android:text="远程数据销毁"
-        android:drawableLeft="@android:drawable/star_big_on"
-        style="@style/TextStyleOfSetupGuide"
-        />
-        <TextView 
-        android:text="远程锁屏"
-        android:drawableLeft="@android:drawable/star_big_on"
-        style="@style/TextStyleOfSetupGuide"
-        />
-        
-        <LinearLayout 
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:background="#ffffffff"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            >
-            <ImageView 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/presence_online"
-                />
-            <ImageView 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/presence_offline"
-                />
-            <ImageView 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/presence_offline"
-                />
-            <ImageView 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/presence_offline"
-                />
-        </LinearLayout>
-        
-        <RelativeLayout 
-           android:layout_width="match_parent" 
-           android:layout_height="match_parent"
-            >
-            <ImageView 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:src="@drawable/setup_one"
-                />
+        android:textSize="18sp" />
 
-            <Button
-                android:id="@+id/bt_next"
-               style="@style/button_next_style"/>
-        </RelativeLayout>
+    <TextView
+        style="@style/TextStyleOfSetupGuide"
+        android:text="您的手机防盗卫士" />
+
+    <TextView
+        style="@style/TextStyleOfSetupGuide"
+        android:drawableLeft="@android:drawable/star_big_on"
+        android:text="SIM卡变更报警" />
+
+    <TextView
+        style="@style/TextStyleOfSetupGuide"
+        android:drawableLeft="@android:drawable/star_big_on"
+        android:text="GPS追踪" />
+
+    <TextView
+        style="@style/TextStyleOfSetupGuide"
+        android:drawableLeft="@android:drawable/star_big_on"
+        android:text="远程数据销毁" />
+
+    <TextView
+        style="@style/TextStyleOfSetupGuide"
+        android:drawableLeft="@android:drawable/star_big_on"
+        android:text="远程锁屏" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#ffffffff"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/presence_online" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/presence_offline" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/presence_offline" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/presence_offline" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/setup_one" />
+
+        <Button
+            android:id="@+id/bt_next"
+            style="@style/button_next_style" />
+    </RelativeLayout>
 
 </LinearLayout>
