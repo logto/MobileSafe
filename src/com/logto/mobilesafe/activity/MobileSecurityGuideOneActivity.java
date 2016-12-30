@@ -2,6 +2,8 @@ package com.logto.mobilesafe.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -12,6 +14,7 @@ import com.logto.mobilesafe.R;
 
 public class MobileSecurityGuideOneActivity extends Activity {
 	private Button bt_next;
+	private SharedPreferences sp;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -35,7 +38,18 @@ public class MobileSecurityGuideOneActivity extends Activity {
 	private void initView() {
 		bt_next = (Button) findViewById(R.id.bt_next);
 	}
-
+	
+	@Override
+	public void onBackPressed() {
+		sp = getSharedPreferences("config", MODE_PRIVATE);
+		if(!sp.getBoolean("mobileSecurityGuide", false)){
+			finish();
+		}else {
+			Intent intent = new Intent(MobileSecurityGuideOneActivity.this,MobileSecurityActivity.class);
+			startActivity(intent);
+			finish();
+		}
+	}
 
 
 }

@@ -72,7 +72,7 @@
 	    android:textColor="#99cc99"
 	    android:textSize="14sp"
 	    android:gravity="left|center_vertical"
-	    android:background="@drawable/btn_shape_setting"
+	    android:background="@drawable/shape_selector"
 	    />
 	
 	<TextView 
