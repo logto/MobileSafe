@@ -51,6 +51,10 @@
             android:name="com.logto.mobilesafe.activity.MobileSecurityGuideFourActivity"
             android:label="@string/title_activity_mobile_security_guide_four" >
         </activity>
+        <activity
+            android:name="com.logto.mobilesafe.activity.BaseSetupActivity"
+            android:label="@string/title_activity_base_setup" >
+        </activity>
     </application>
 
 </manifest>

@@ -10,7 +10,7 @@ import android.widget.Button;
 
 import com.logto.mobilesafe.R;
 
-public class MobileSecurityGuideTwoActivity extends Activity {
+public class MobileSecurityGuideTwoActivity extends BaseSetupActivity {
 	private Button btn_next;
 	private Button btn_pre;
 	@Override
@@ -26,18 +26,14 @@ public class MobileSecurityGuideTwoActivity extends Activity {
 		btn_next.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(MobileSecurityGuideTwoActivity.this, MobileSecurityGuideThreeActivity.class);
-				startActivity(intent);
-				finish();
+				enterNextPage();
 			}
 		});
 		//回到2页
 		btn_pre.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(MobileSecurityGuideTwoActivity.this, MobileSecurityGuideOneActivity.class);
-				startActivity(intent);
-				finish();
+				enterPrePage();
 			}
 		});
 	}
@@ -48,10 +44,22 @@ public class MobileSecurityGuideTwoActivity extends Activity {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.mobile_security_guide_two, menu);
-		return true;
+	public void enterNextPage() {
+		Intent intent = new Intent(MobileSecurityGuideTwoActivity.this, MobileSecurityGuideThreeActivity.class);
+		startActivity(intent);
+		finish();
+		//设置下一个页面进入的动画(此方法必须放置在finish()或者startActivity的后面)
+		overridePendingTransition(R.anim.tran_next_in, R.anim.tran_next_out);
+	}
+
+	@Override
+	public void enterPrePage() {
+		Intent intent = new Intent(MobileSecurityGuideTwoActivity.this, MobileSecurityGuideOneActivity.class);
+		startActivity(intent);
+		finish();
+		//设置上一个页面进入的动画(此方法必须放置在finish()或者startActivity的后面)
+		overridePendingTransition(R.anim.tran_pre_in, R.anim.tran_pre_out);
+		
 	}
 
 }

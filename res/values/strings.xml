@@ -13,5 +13,6 @@
     <string name="title_activity_mobile_security_guide_two">MobileSecurityGuideTwoActivity</string>
     <string name="title_activity_mobile_security_guide_three">MobileSecurityGuideThreeActivity</string>
     <string name="title_activity_mobile_security_guide_four">MobileSecurityGuideFourActivity</string>
+    <string name="title_activity_base_setup">BaseSetupActivity</string>
 
 </resources>
