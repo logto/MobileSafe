@@ -20,7 +20,7 @@
         style="@style/TextStyleOfSetupGuide"
         />
       	<com.logto.mobilesafe.view.SettingItemView
- 	    android:id="@+id/siv_update"
+      	android:id="@+id/siv_bind_sim"
  	    android:layout_width="wrap_content"
  	    android:layout_height="wrap_content"
  	    app:title="点击绑定SIM卡"
