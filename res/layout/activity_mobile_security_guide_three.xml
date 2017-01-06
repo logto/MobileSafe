@@ -26,7 +26,7 @@
             android:hint="设置安全号码:120"
             android:inputType="number"
             android:textSize="12sp"
-            android:textColor="#00000000"
+            android:textColor="#000000"
             android:background="@drawable/text_shape"
             />
         <Button 

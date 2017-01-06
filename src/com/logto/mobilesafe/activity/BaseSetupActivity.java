@@ -1,6 +1,7 @@
 package com.logto.mobilesafe.activity;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -13,6 +14,7 @@ import com.logto.mobilesafe.R;
  */
 public abstract class BaseSetupActivity extends Activity {
 	private GestureDetector detector;
+	protected SharedPreferences sp;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,6 +50,9 @@ public abstract class BaseSetupActivity extends Activity {
 			}
 
 		});
+		
+		//初始化sp
+		sp = getSharedPreferences("config",	MODE_PRIVATE);
 	}
 
 	//使用手势识别器

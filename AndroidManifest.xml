@@ -11,6 +11,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
     <application
         android:allowBackup="true"
@@ -54,6 +58,20 @@
         <activity
             android:name="com.logto.mobilesafe.activity.BaseSetupActivity"
             android:label="@string/title_activity_base_setup" >
+        </activity>
+
+        <receiver
+            android:name="com.logto.mobilesafe.receivers.BootCompleteReceiver"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.logto.mobilesafe.activity.SelectorContactActivity"
+            android:label="@string/title_activity_selector_contact" >
         </activity>
     </application>
 
