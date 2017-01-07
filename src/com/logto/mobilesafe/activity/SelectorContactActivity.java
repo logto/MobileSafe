@@ -22,7 +22,7 @@ import com.logto.mobilesafe.R;
 public class SelectorContactActivity extends Activity {
 	private ListView lvList;
 	private SharedPreferences sp;
-	private String number_selected;
+	private String number_selected;//被选择的安全号码
 	private Button btn_confirm;
 
 	@Override
@@ -54,17 +54,31 @@ public class SelectorContactActivity extends Activity {
 		btn_confirm = (Button) findViewById(R.id.btn_confirm);
 		sp = getSharedPreferences("config", MODE_PRIVATE);
 		final Editor editor = sp.edit();
-
+		
+		//保存号码
 		btn_confirm.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//保存号码
-				editor.putString("SAFE_NUMBER", number_selected);
+				editor.putString("SAFE_NUMBER", spiteNumber(number_selected));
 				editor.commit();
 				//关闭当前页面
 				finish();
 			}
 		});
+	}
+	/*
+	 * 拆分电话号码
+	 */
+	private static String spiteNumber(String targetString) {
+		String[] strings = targetString.split(" ");
+		StringBuffer sb = new StringBuffer();
+		for(int i=0;i<strings.length;i++){
+			String[] strings3 = strings[i].split("-");
+			for(String key:strings3){
+				sb.append(key);
+			}
+		}
+		return sb.toString();
 	}
 	/**
 	 *得到联系人
