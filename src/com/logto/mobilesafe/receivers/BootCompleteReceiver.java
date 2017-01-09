@@ -18,12 +18,12 @@ public class BootCompleteReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		//检验手机防盗是否已经开启
+		sp = context.getSharedPreferences("config",context.MODE_PRIVATE);
 		if(!sp.getBoolean("PROTECTED", false)){
 			//没有开启，则直接返回 
 			return;
 		}
 		//1.得到之前的sim卡信息
-		sp = context.getSharedPreferences("config",context.MODE_PRIVATE);
 		String sim_sp = sp.getString("SIM", null);
 		//2.得到当前手机的sim卡信息
 		TelephonyManager tm = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
