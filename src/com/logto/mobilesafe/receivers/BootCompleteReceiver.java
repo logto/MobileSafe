@@ -17,6 +17,11 @@ public class BootCompleteReceiver extends BroadcastReceiver {
 	private SharedPreferences sp;
 	@Override
 	public void onReceive(Context context, Intent intent) {
+		//检验手机防盗是否已经开启
+		if(!sp.getBoolean("PROTECTED", false)){
+			//没有开启，则直接返回 
+			return;
+		}
 		//1.得到之前的sim卡信息
 		sp = context.getSharedPreferences("config",context.MODE_PRIVATE);
 		String sim_sp = sp.getString("SIM", null);
@@ -31,7 +36,7 @@ public class BootCompleteReceiver extends BroadcastReceiver {
 	        //拆分短信内容（手机短信长度限制）    
 	        List<String> divideContents = smsManager.divideMessage("你的手机或许已丢失，请密切关注号码"+sim_current);   
 	        for (String text : divideContents) {    
-	            smsManager.sendTextMessage(sim_current, null, text, null, null);    
+	            smsManager.sendTextMessage(sp.getString("SAFE_NUMBER", "120"), null, text, null, null);    
 	        }  
 		}
 	}

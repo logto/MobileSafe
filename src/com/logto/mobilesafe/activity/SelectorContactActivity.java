@@ -9,6 +9,9 @@ import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -19,29 +22,34 @@ import android.widget.SimpleAdapter;
 
 import com.logto.mobilesafe.R;
 
-public class SelectorContactActivity extends Activity {
+public class SelectorContactActivity extends Activity{
 	private ListView lvList;
 	private SharedPreferences sp;
 	private String number_selected;//被选择的安全号码
 	private Button btn_confirm;
-
+	
+	private ArrayList<HashMap<String, String>> readContact;
+	
+	private Handler handler = new Handler(){
+		@Override
+		public void handleMessage(Message msg) {
+			setAdapter();
+		}
+	};
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_selector_contact);
 		initView();
-		setAdapter();
-
 	}
 	private void setAdapter() {
 		lvList = (ListView) findViewById(R.id.lv_list);
-		final ArrayList<HashMap<String, String>> readContact = readContact();
 		// System.out.println(readContact);
 		lvList.setAdapter(new SimpleAdapter(this, readContact,
 				R.layout.contact_list_item, new String[] { "name", "phone" },
 				new int[] { R.id.tv_name, R.id.tv_phone }));
 
-		lvList.setOnItemClickListener(new OnItemClickListener() {
+	 	lvList.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
@@ -60,16 +68,28 @@ public class SelectorContactActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				editor.putString("SAFE_NUMBER", spiteNumber(number_selected));
-				editor.commit();
+	 			editor.commit();
 				//关闭当前页面
 				finish();
 			}
 		});
+		
+		//获取数据
+		new Thread(){
+			@Override
+			public void run() {
+				readContact = readContact();
+				handler.sendEmptyMessage(0);
+			}
+		}.start();
 	}
 	/*
 	 * 拆分电话号码
 	 */
 	private static String spiteNumber(String targetString) {
+		if(TextUtils.isEmpty(targetString)){
+			return null;
+		}
 		String[] strings = targetString.split(" ");
 		StringBuffer sb = new StringBuffer();
 		for(int i=0;i<strings.length;i++){
@@ -87,7 +107,7 @@ public class SelectorContactActivity extends Activity {
 		// 首先,从raw_contacts中读取联系人的id("contact_id")
 		// 其次, 根据contact_id从data表中查询出相应的电话号码和联系人名称
 		// 然后,根据mimetype来区分哪个是联系人,哪个是电话号码
-
+		
 		Uri rawContactsUri = Uri.parse("content://com.android.contacts/raw_contacts");
 		Uri dataUri = Uri.parse("content://com.android.contacts/data");
 
