@@ -55,18 +55,19 @@ public class HomeActivity extends Activity {
 				case 0://进入手机卫士
 					enterMobileGuard();
 					break;
+				case 7://进入手机卫士
+					Intent atoolsIntent = new Intent(HomeActivity.this,AtoolsActivity.class);
+					startActivity(atoolsIntent);
+					break;
 				case 8:
 					//跳转到设置中心
-					Intent intent = new Intent(HomeActivity.this,SettingActivity.class); 
-					startActivity(intent);
+					Intent settingIntent = new Intent(HomeActivity.this,SettingActivity.class); 
+					startActivity(settingIntent);
 					break;
-
 				default:
 					break;
 				}
 			}
-
-
 		});
 
 	}

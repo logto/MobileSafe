@@ -113,6 +113,15 @@
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name="com.logto.mobilesafe.activity.AtoolsActivity"
+            android:label="@string/title_activity_atools" >
+        </activity>
+        <activity
+            android:name="com.logto.mobilesafe.activity.NumberAddressQueryActivity"
+            android:label="@string/title_activity_number_address_query" >
+        </activity>
     </application>
 
 </manifest>

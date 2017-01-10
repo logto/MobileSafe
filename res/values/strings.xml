@@ -16,5 +16,7 @@
     <string name="title_activity_base_setup">BaseSetupActivity</string>
     <string name="title_activity_selector_contact">SelectorContactActivity</string>
     <string name="title_activity_lock_screen">LockScreenActivity</string>
+    <string name="title_activity_atools">AtoolsActivity</string>
+    <string name="title_activity_number_address_query">NumberAddressQueryActivity</string>
 
 </resources>
