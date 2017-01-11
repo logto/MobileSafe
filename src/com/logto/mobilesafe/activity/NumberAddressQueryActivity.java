@@ -7,9 +7,12 @@ import java.util.regex.Pattern;
 import android.app.Activity;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -43,6 +46,7 @@ public class NumberAddressQueryActivity extends Activity {
 				//手机防盗的前提：绑定sim卡，并设置安全号码，以上两部未实现则不能实现手机防盗功能
 				String number = et_number.getText().toString();
 				if(TextUtils.isEmpty(number)){
+					shakeView();
 					Toast.makeText(NumberAddressQueryActivity.this, "安全号码未设置，请设置安全号码", 0).show();
 					return;
 				}
@@ -116,6 +120,14 @@ public class NumberAddressQueryActivity extends Activity {
 		}
 	}
 
+
+	private void shakeView() {
+		Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);//加载动画资源文件  
+		et_number.startAnimation(shake); //给组件播放动画效果  
+		Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE); 
+		//震动30毫秒  
+        vibrator.vibrate(30);
+	}
 
 	/**得到输入区号中的前三位数字或前四位数字去掉首位为零后的数字。*/
 	public String getAreaCodePrefix(String number){
