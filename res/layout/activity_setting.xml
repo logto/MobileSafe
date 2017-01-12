@@ -32,6 +32,14 @@
  	    app:update_off="音乐更新已关闭"
  	    app:update_on="音乐更新已开启"
  	    />
+ 	<com.logto.mobilesafe.view.SettingItemView
+ 	    android:id="@+id/siv_call_address"
+ 	    android:layout_width="wrap_content"
+ 	    android:layout_height="wrap_content"
+ 	    app:title="来电归属地显示"
+ 	    app:update_off="来电归属地显示已关闭"
+ 	    app:update_on="来电归属地显示已开启"
+ 	    />
  
  	
 </LinearLayout>

@@ -8,6 +8,8 @@
     <string name="title_activity_setting">SettingActivity</string>
     <string name="auto_update_off">自动升级已关闭</string>
     <string name="auto_update_on">自动升级已开启</string>
+    <string name="call_address_off">来电归属地显示已关闭</string>
+    <string name="call_address_on">来电归属地显示已开启</string>
     <string name="title_activity_mobile_security">MobileSecurityActivity</string>
     <string name="title_activity_mobile_security_guide_one">MobileSecurityGuideOneActivity</string>
     <string name="title_activity_mobile_security_guide_two">MobileSecurityGuideTwoActivity</string>
