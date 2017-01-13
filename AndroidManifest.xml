@@ -24,6 +24,8 @@
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <application
         android:allowBackup="true"
@@ -130,12 +132,6 @@
             android:enabled="true"
             android:exported="true" >
         </service>
-
-        <receiver
-            android:name="com.logto.mobilesafe.receivers.OutCallReceiver"
-            android:enabled="true"
-            android:exported="true" >
-        </receiver>
     </application>
 
 </manifest>
