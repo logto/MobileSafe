@@ -55,6 +55,10 @@ public class HomeActivity extends Activity {
 				case 0://进入手机卫士
 					enterMobileGuard();
 					break;
+				case 1://进入手机卫士
+					Intent callSmsSafeIntent = new Intent(HomeActivity.this,CallSmsSafeActivity.class);
+					startActivity(callSmsSafeIntent);
+					break;
 				case 7://进入手机卫士
 					Intent atoolsIntent = new Intent(HomeActivity.this,AtoolsActivity.class);
 					startActivity(atoolsIntent);

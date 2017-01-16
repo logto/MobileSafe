@@ -24,14 +24,18 @@
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
+    
+    <instrumentation
+        android:name="android.test.InstrumentationTestRunner"
+        android:targetPackage="com.logto.mobilesafe" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon"
-        android:label="@string/app_name"
-        android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
+        android:label="@string/app_name">
+        <uses-library android:name="android.test.runner" />
         <activity
             android:name="com.logto.mobilesafe.activity.SplashActivity"
             android:label="@string/app_name" >
@@ -132,6 +136,11 @@
             android:enabled="true"
             android:exported="true" >
         </service>
+
+        <activity
+            android:name="com.logto.mobilesafe.activity.CallSmsSafeActivity"
+            android:label="@string/title_activity_call_sms_safe" >
+        </activity>
     </application>
 
 </manifest>
