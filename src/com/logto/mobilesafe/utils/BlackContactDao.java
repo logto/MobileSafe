@@ -86,6 +86,28 @@ public class BlackContactDao {
 		db.close();
 		return blackContactInfos;
 	}
+	
+	/**
+	 * 从数据库中查找部分数据
+	 * @param index 起始查找的下标
+	 * @return 返回查到的数据值
+	 */
+	public List<BlackContactInfo> querySegment(String index){
+		SQLiteDatabase db = helper.getWritableDatabase();
+		List<BlackContactInfo> blackContactInfos  = new ArrayList<BlackContactInfo>();
+		Cursor cursor = db.rawQuery("select number,mode from blaceContact limit 20 offset ?", new String []{index});
+		if(cursor==null){
+			return blackContactInfos;
+		}
+		while (cursor.moveToNext()) {
+			BlackContactInfo blackContact = new BlackContactInfo();
+			blackContact.setMode(cursor.getString(cursor.getColumnIndex("mode")));
+			blackContact.setNumber(cursor.getString(cursor.getColumnIndex("number")));
+			blackContactInfos.add(blackContact);
+		}
+		db.close();
+		return blackContactInfos;
+	}
 
 	/**
 	 * 查询某个号码的拦截模式

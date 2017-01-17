@@ -15,7 +15,7 @@ public class BlackContactDBOpenHelper extends SQLiteOpenHelper{
 	/**数据库已经创建后，去创建数据库中的表*/
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		db.execSQL("create table blaceContact(_id integer primary key autoincrement,number varchar(20),mode varchar(2))");
+		db.execSQL("create table blackcontact(_id integer primary key autoincrement,number varchar(20),mode varchar(2))");
 	}
 
 	/**数据库升级的时候，会调用此方法*/

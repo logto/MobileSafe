@@ -23,7 +23,7 @@ public class TestCreateBlactContactDB extends AndroidTestCase{
 			if(i<10){
 				dao.add("1589229380"+i,String.valueOf(random.nextInt(3)));
 			}else {
-				dao.add("158922938"+i, "1");
+				dao.add("158922938"+i, String.valueOf(random.nextInt(3)));
 			}
 		}
 	}

@@ -2,37 +2,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#ffffffff"
+    android:orientation="vertical"
     tools:context=".CallSmsSafeActivity" >
-	
-    <RelativeLayout 
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:gravity="center_vertical"
-        >
-         <TextView
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:layout_alignParentLeft="true"
-        android:paddingLeft="10dp"
-        android:gravity="center_vertical"
-        android:text="黑名单管理" />
-         
-        <Button 
-         	android:id="@+id/btn_addContacts"   
-         	android:layout_width="60dp"
-         	android:layout_height="40dp"
-         	android:layout_alignParentRight="true"
-         	android:paddingRight="10dp"
-         	android:background="@drawable/shape_selector"
-         	android:text="添加"
-            />
+        android:gravity="center_vertical" >
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="黑名单管理" />
+
+        <Button
+            android:id="@+id/btn_addContacts"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/shape_selector"
+            android:paddingRight="10dp"
+            android:text="添加" />
     </RelativeLayout>
-    
-    <ListView 
-        android:id="@+id/lv_blackContact"
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        ></ListView>
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:id="@+id/ll_layout"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:orientation="vertical" >
+
+            <ProgressBar
+                android:id="@+id/pb_lv"
+                android:layout_width="40dp"
+                android:layout_height="40dp" 
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="就在下一分钟" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/lv_blackContact"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+        </ListView>
+    </FrameLayout>
+
 </LinearLayout>
