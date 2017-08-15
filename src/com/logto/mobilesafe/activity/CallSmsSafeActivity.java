@@ -27,7 +27,6 @@ public class CallSmsSafeActivity extends Activity {
 	private List<BlackContactInfo> blackContactInfos;
 	private Handler handler;
 	
-	
 	private BlackContactDao dao;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,15 +67,11 @@ public class CallSmsSafeActivity extends Activity {
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 				switch (scrollState) {
 				case OnScrollListener.SCROLL_STATE_IDLE://静止
-					
 					break;
 				case OnScrollListener.SCROLL_STATE_FLING://滚动状态
-					
 					break;
 				case OnScrollListener.SCROLL_STATE_TOUCH_SCROLL://触摸滑动状态
-					
 					break;
-
 				default :
 					break;
 				}
@@ -138,9 +133,7 @@ public class CallSmsSafeActivity extends Activity {
 		       原来自己布局中的数据记载到了屏幕上
 		       holder.tv_item_word.setText(data.get(position).getPinyin().substring(0, 1));
 		        holder.tv_item_name.setText(data.get(position).getName());*/
-
 			}
-
 			// 装配数据
 			holder.tv_item_number .setText(  blackContactInfos .get(position).getNumber());
 			String mode = blackContactInfos .get(position).getMode();
@@ -151,10 +144,8 @@ public class CallSmsSafeActivity extends Activity {
 			}else {
 				holder.tv_item_mode.setText("全部拦截");
 			}
-			
 			return convertView;
 		}
-
 	}
 
 
